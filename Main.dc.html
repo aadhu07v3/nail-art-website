@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lacquer — Nail Art Home</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#2A1F2D;background:#0A0507}
+a{color:#F5E9E4;text-decoration:none}a:hover{color:#E8879B}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes rise{from{transform:translateY(120px);opacity:0}to{transform:none;opacity:1}}
+@keyframes polish{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes sweep{0%{left:-90px}60%,100%{left:260px}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes popA{from{transform:scale(.6);opacity:.2}to{transform:none;opacity:1}}
+@keyframes popB{from{transform:scale(.6);opacity:.2}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</helmet>
+<div style="width:100%;box-sizing:border-box;background:radial-gradient(circle at 12% 8%,#6B1428 0,transparent 38%),radial-gradient(circle at 92% 40%,#5E1224 0,transparent 38%),radial-gradient(circle at 8% 88%,#4A0E1C 0,transparent 42%),#0A0507">
+<section id="top" style="position:relative;overflow:hidden;min-height:820px;box-sizing:border-box">
+<header style="position:relative;z-index:2;width:calc(100% - 32px);max-width:1136px;margin:20px auto 0;padding:16px 28px;border-radius:24px;background:rgba(255,255,255,.07);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;box-sizing:border-box;animation:fadeUp .8s .1s both">
+<a href="#top" style="font-family:Fraunces,serif;font-size:28px;font-weight:600;color:#E8879B">Lacquer</a>
+<nav style="display:flex;flex-wrap:wrap;gap:28px;font-size:15px;font-weight:500">
+<a href="#styles">Nail art styles</a><a href="#shapes">Shapes</a><a href="#tryon">Find your shape</a>
+</nav>
+<a href="#tryon" style="background:#8E1B38;color:#fff;padding:12px 22px;border-radius:999px;font-size:15px;font-weight:500">Try it on your hand</a>
+</header>
+<div style="position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:32px 32px 96px;display:flex;flex-wrap:wrap;gap:32px;align-items:center;box-sizing:border-box">
+<div style="flex:1 1 480px;min-width:0">
+<p style="margin:0 0 16px;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#E8879B;animation:fadeUp .9s .3s both">Nail art, curated</p>
+<h1 style="margin:0 0 20px;font-family:Fraunces,serif;font-weight:400;font-size:68px;line-height:1.02;color:#F5E9E4;animation:fadeUp .9s .5s both">Find the nail art that was made for your hands.</h1>
+<p style="margin:0 0 32px;font-size:18px;line-height:1.6;color:#D8C4C4;max-width:520px;animation:fadeUp .9s .7s both">Explore every style from French tips to chrome, then upload a photo of your hand and discover the nail shape that suits you best.</p>
+<div style="display:flex;flex-wrap:wrap;gap:14px;animation:fadeUp .9s .9s both">
+<a href="#tryon" style="background:#8E1B38;color:#fff;padding:16px 28px;border-radius:999px;font-weight:600">Upload your hand</a>
+<a href="#styles" style="border:1.5px solid rgba(255,255,255,.4);color:#F5E9E4;padding:14px 28px;border-radius:999px;font-weight:600">Browse styles</a>
+</div>
+</div>
+<div style="flex:1 1 440px;min-width:0;display:flex;justify-content:center">
+<div style="position:relative;width:440px;max-width:100%;height:620px;animation:floaty 6s 3s ease-in-out infinite">
+<div style="position:absolute;left:50%;top:60px;width:460px;height:460px;margin-left:-230px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#B02A4D,#5E1224 60%,#2A0610);box-shadow:0 0 90px rgba(142,27,56,.55),inset 0 2px 0 rgba(255,255,255,.2);animation:pop 1.2s .2s cubic-bezier(.2,.9,.3,1.2) both"></div>
+<div style="position:absolute;left:50%;bottom:0;width:250px;height:560px;margin-left:-125px;border-radius:125px 125px 0 0;background:linear-gradient(90deg,#D9B895,#EBD0B5 50%,#D2AE8A);animation:rise 1.4s .4s cubic-bezier(.2,.8,.2,1) both"></div>
+<div style="position:absolute;left:50%;top:92px;width:176px;height:270px;margin-left:-88px;border-radius:88px 88px 32px 32px / 120px 120px 32px 32px;overflow:hidden;background:#F5E4D8;box-shadow:inset 0 0 0 3px rgba(94,18,36,.15);animation:fadeUp 1s .9s both">
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,#8E1B38,#5E1224);animation:polish 2.6s 1.8s cubic-bezier(.5,0,.2,1) both"></div>
+<div style="position:absolute;left:22px;top:22px;width:34px;height:120px;border-radius:20px;background:rgba(255,255,255,.28);transform:rotate(8deg)"></div>
+<div style="position:absolute;top:-40px;left:-90px;width:46px;height:380px;background:rgba(255,255,255,.4);transform:rotate(22deg);animation:sweep 3.6s 4.6s ease-in-out infinite"></div>
+</div>
+<div style="position:absolute;left:30px;top:150px;width:22px;height:22px;background:#EFE3D3;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:twinkle 2.4s 4s ease-in-out infinite"></div>
+<div style="position:absolute;right:34px;top:230px;width:30px;height:30px;background:#EFE3D3;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:twinkle 2.4s 4.7s ease-in-out infinite"></div>
+<div style="position:absolute;right:90px;top:70px;width:16px;height:16px;background:#EFE3D3;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:twinkle 2.4s 5.2s ease-in-out infinite"></div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+<section id="shapes" style="padding:88px 0;overflow:hidden">
+<div style="width:calc(100% - 32px);max-width:1136px;margin:0 auto;padding:56px 32px;box-sizing:border-box;text-align:center;border-radius:32px;background:rgba(255,255,255,.07);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18)">
+<h2 style="margin:0 0 12px;font-family:Fraunces,serif;font-weight:400;font-size:44px;color:#F5E9E4">Nail shapes</h2>
+<p style="margin:0 auto 24px;font-size:17px;color:#D8C4C4;max-width:520px">Six classic shapes, turning in a circle. Which one is yours?</p>
+<div style="overflow-x:auto;padding-bottom:8px">
+<div style="position:relative;width:560px;height:560px;margin:0 auto">
+<div style="position:absolute;inset:0;animation:spin 40s linear infinite">
+<sc-for list="{{shapes}}" as="s" hint-placeholder-count="6">
+<div style="position:absolute;left:50%;top:50%;width:84px;height:150px;margin:-75px 0 0 -42px;transform:{{s.tf}}">
+<div style="position:absolute;inset:0;border-radius:42px 42px 0 0;background:linear-gradient(90deg,#DDBE9F,#EBD0B5 50%,#D9B895)"></div>
+<div style="position:absolute;left:12px;top:14px;width:60px;height:{{s.h}}px;background:{{s.bg}};border-radius:{{s.r}};clip-path:{{s.clip}};box-shadow:inset 0 -10px 14px rgba(0,0,0,.14)">
+<div style="position:absolute;left:9px;top:10px;width:9px;height:42%;border-radius:8px;background:rgba(255,255,255,.4)"></div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;background:#5E1224;color:#EFE3D3;display:flex;flex-direction:column;align-items:center;justify-content:center">
+<span style="font-family:Fraunces,serif;font-size:34px">Six</span><span style="font-size:13px;letter-spacing:.12em;text-transform:uppercase">shapes</span>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px">
+<sc-for list="{{shapes}}" as="s" hint-placeholder-count="6">
+<span style="padding:8px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.06);color:#F5E9E4;font-weight:600;font-size:14px">{{s.name}}</span>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="tryon" style="color:#fff;padding:88px 0">
+<div style="width:calc(100% - 32px);max-width:1136px;margin:0 auto;padding:56px 32px;display:flex;flex-wrap:wrap;gap:48px;box-sizing:border-box;border-radius:32px;background:rgba(255,255,255,.07);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18)">
+<div style="flex:1 1 440px;min-width:0">
+<h2 style="margin:0 0 16px;font-family:Fraunces,serif;font-weight:400;font-size:44px">Which nail shape suits you?</h2>
+<p style="margin:0 0 28px;font-size:17px;line-height:1.6;color:#E3D8E3">Upload a clear photo of your hand, palm down, in daylight. Then tell us how your nail beds look.</p>
+<label for="photo" style="display:inline-block;background:#fff;color:#2A1F2D;padding:16px 28px;border-radius:999px;font-weight:600;cursor:pointer">Upload a hand photo</label>
+<input id="photo" type="file" accept="image/*" onChange="{{onFile}}" style="position:absolute;width:1px;height:1px;opacity:0">
+<p style="margin:32px 0 12px;font-weight:600">My nail beds are</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<sc-for list="{{beds}}" as="b" hint-placeholder-count="3">
+<button onClick="{{b.pick}}" style="min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid #fff;font:inherit;font-weight:500;cursor:pointer;background:{{b.bg}};color:{{b.fg}}">{{b.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:20px">
+<div style="height:340px;border-radius:24px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);overflow:hidden;display:flex;align-items:center;justify-content:center">
+<sc-if value="{{hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{photo}}" alt="Your uploaded hand" style="width:100%;height:100%;object-fit:cover"></sc-if>
+<sc-if value="{{noPhoto}}" hint-placeholder-val="{{ true }}"><p style="margin:0;color:#E3D8E3;font-size:15px">Your photo will appear here</p></sc-if>
+</div>
+<div style="background:rgba(142,27,56,.28);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);color:#F5E9E4;border-radius:24px;padding:24px 28px">
+<p style="margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#E8879B">Your best match</p>
+<h3 style="margin:0 0 8px;font-family:Fraunces,serif;font-weight:600;font-size:28px">{{result.title}}</h3>
+<p style="margin:0;font-size:15px;line-height:1.6;color:#D8C4C4">{{result.text}}</p>
+</div>
+</div>
+</div>
+</section>
+
+<footer style="max-width:1200px;margin:0 auto;padding:40px 32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px;color:#BFA9AD;box-sizing:border-box">
+<span style="font-family:Fraunces,serif;font-weight:600;color:#E8879B">Lacquer</span><span>© Lacquer. All rights reserved.</span>
+</footer><section id="styles" style="padding:88px 0;overflow:hidden">
+<div style="width:calc(100% - 32px);max-width:1136px;margin:0 auto;padding:56px 32px;display:flex;flex-wrap:wrap;gap:48px;align-items:center;box-sizing:border-box;border-radius:32px;background:rgba(255,255,255,.07);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18)">
+<div style="flex:1 1 400px;min-width:0">
+<h2 style="margin:0 0 12px;font-family:Fraunces,serif;font-weight:400;font-size:44px;color:#F5E9E4">Types of nail art</h2>
+<p style="margin:0 0 28px;font-size:17px;color:#D8C4C4;max-width:520px">Tap a style and see it on a full hand of nails.</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px">
+<sc-for list="{{styles}}" as="t" hint-placeholder-count="6">
+<button onClick="{{t.pick}}" style="min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);font:inherit;font-weight:600;cursor:pointer;background:{{t.chipBg}};color:{{t.chipFg}}">{{t.name}}</button>
+</sc-for>
+</div>
+<h3 style="margin:0 0 8px;font-family:Fraunces,serif;font-weight:600;font-size:28px;color:#F5E9E4">{{current.name}}</h3>
+<p style="margin:0;font-size:16px;line-height:1.6;color:#D8C4C4;max-width:440px">{{current.text}}</p>
+</div>
+<div style="flex:1 1 440px;min-width:0;overflow-x:auto;display:flex;justify-content:center">
+<div style="position:relative;width:520px;height:540px;flex:none">
+<div style="position:absolute;left:50%;top:40px;width:460px;height:460px;margin-left:-230px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#B02A4D,#5E1224 60%,#2A0610);box-shadow:0 0 90px rgba(142,27,56,.55)"></div>
+<sc-for list="{{fingers}}" as="f" hint-placeholder-count="5">
+<div style="position:absolute;left:{{f.left}}px;bottom:{{f.bottom}}px;width:{{f.w}}px;height:{{f.h}}px;border-radius:{{f.rad}}px {{f.rad}}px 0 0;background:#E6CAAE;transform:rotate({{f.rot}}deg);transform-origin:50% 100%">
+<div style="position:absolute;top:16px;left:{{f.nl}}px;width:{{f.nw}}px;height:{{f.nh}}px;border-radius:{{f.nw}}px {{f.nw}}px 12px 12px / 60% 60% 12px 12px;background:{{nailBg}};box-shadow:inset 0 -8px 10px rgba(0,0,0,.14);animation:{{popAnim}} .6s ease-out both">
+<div style="position:absolute;left:6px;top:8px;width:6px;height:38%;border-radius:6px;background:rgba(255,255,255,.4)"></div>
+</div>
+</div>
+</sc-for>
+<div style="position:absolute;left:110px;bottom:0;width:300px;height:250px;border-radius:30px 30px 110px 110px;background:#E6CAAE"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":2300}}'>
+class Component extends DCLogic {
+constructor(p){super(p);this.state={photo:null,bed:'average',sel:0,flip:false};}
+renderVals(){
+const st=this.state;
+const dots='radial-gradient(circle at 20% 30%,#fff 0 2px,transparent 3px),radial-gradient(circle at 70% 25%,#fff 0 2px,transparent 3px),radial-gradient(circle at 45% 60%,#fff 0 2px,transparent 3px),radial-gradient(circle at 75% 75%,#fff 0 2px,transparent 3px),radial-gradient(circle at 30% 85%,#fff 0 2px,transparent 3px)';
+const defs=[
+{name:'French tips',text:'Clean white edges on a natural base. Timeless and easy to wear.',nb:'linear-gradient(180deg,#fff 0 24%,#F3D6CC 24%)'},
+{name:'Ombré',text:'A soft blend from nude to deep burgundy, fading up the nail.',nb:'linear-gradient(0deg,#F3D6CC,#5E1224)'},
+{name:'Chrome',text:'Mirror-bright metallic powder over gel for a liquid shine.',nb:'linear-gradient(135deg,#F5F5F7,#8E95A8 45%,#FAFAFA 60%,#9AA1B5)'},
+{name:'Floral',text:'Hand-painted petals and stems, from delicate to bold.',nb:'radial-gradient(circle at 35% 40%,#C94A66 0 7px,transparent 8px),radial-gradient(circle at 68% 58%,#E89AAE 0 6px,transparent 7px),radial-gradient(circle at 45% 80%,#9A2340 0 5px,transparent 6px),#F6E5DA'},
+{name:'Geometric',text:'Lines, triangles and color blocks in sharp, modern layouts.',nb:'linear-gradient(135deg,#5E1224 0 33%,#F6E5DA 33% 66%,#C98E6B 66%)'},
+{name:'Glitter and foil',text:'Sparkle, flakes and metallic leaf for statement nails.',nb:dots+',linear-gradient(135deg,#E3B57A,#B7803F)'}];
+const styles=defs.map((d,i)=>({name:d.name,chipBg:st.sel===i?'#8E1B38':'rgba(255,255,255,.06)',chipFg:st.sel===i?'#fff':'#F5E9E4',pick:()=>this.setState({sel:i,flip:!st.flip})}));
+const F=[{left:98,w:62,h:190,rot:-16,rad:31},{left:170,w:66,h:238,rot:-6,rad:33},{left:244,w:68,h:262,rot:2,rad:34},{left:318,w:66,h:228,rot:11,rad:33},{left:386,bottom:130,w:76,h:180,rot:58,rad:38}];
+const fingers=F.map(f=>{const nw=Math.round(f.w*.72);return {left:f.left,bottom:f.bottom||200,w:f.w,h:f.h,rot:f.rot,rad:f.rad,nw:nw,nl:Math.round((f.w-nw)/2),nh:Math.round(nw*1.32)};});
+const shapeDefs=[
+{name:'Round',h:78,r:'30px 30px 12px 12px',clip:'none'},
+{name:'Square',h:84,r:'6px',clip:'none'},
+{name:'Oval',h:96,r:'30px 30px 20px 20px / 46px 46px 20px 20px',clip:'none'},
+{name:'Almond',h:112,r:'30px 30px 12px 12px / 66px 66px 12px 12px',clip:'none'},
+{name:'Coffin',h:108,r:'4px',clip:'polygon(18% 0,82% 0,100% 100%,0 100%)'},
+{name:'Stiletto',h:122,r:'4px',clip:'polygon(50% 0,92% 72%,100% 100%,0 100%,8% 72%)'}];
+const shapes=shapeDefs.map((d,i)=>({name:d.name,h:d.h,r:d.r,clip:d.clip,tf:'rotate('+(i*60)+'deg) translateY(-170px)',bg:i%2===0?'linear-gradient(160deg,#9A2340,#5E1224)':'linear-gradient(160deg,#F7E9DB,#DDBFA0)'}));
+const opts=[['short','Short and wide'],['average','Average'],['long','Long and narrow']];
+const beds=opts.map(o=>({label:o[1],bg:st.bed===o[0]?'#fff':'transparent',fg:st.bed===o[0]?'#2A1F2D':'#fff',pick:()=>this.setState({bed:o[0]})}));
+const R={short:{title:'Almond or stiletto',text:'Tapered shapes visually lengthen shorter, wider nail beds and make fingers look slimmer.'},
+average:{title:'Oval or coffin',text:'Balanced nail beds suit most shapes. Oval stays soft and everyday; coffin makes a statement.'},
+long:{title:'Square or round',text:'These shapes add width and keep long, narrow nail beds looking balanced and strong.'}};
+return {styles,shapes,fingers,beds,current:defs[st.sel],nailBg:defs[st.sel].nb,popAnim:st.flip?'popA':'popB',photo:st.photo,hasPhoto:!!st.photo,noPhoto:!st.photo,result:R[st.bed],
+onFile:(e)=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>this.setState({photo:r.result});r.readAsDataURL(f);}};
+}
+}
+</script>
+</body>
+</html>
