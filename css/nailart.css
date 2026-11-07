@@ -1,0 +1,340 @@
+/* 3D nail art scroll — scoped to the added home-page section only. */
+
+.nail-art {
+    --na-background: #17121D;
+    --na-surface: #302538;
+    --na-border: #51405F;
+    --na-accent: #796487;
+    --na-muted-text: #B09BB8;
+    --na-primary-text: #E8DDEB;
+    --na-near-black: var(--na-background);
+    --na-oxblood: var(--na-accent);
+    --na-silver: var(--na-muted-text);
+    --na-card-width: clamp(180px, 17vw, 280px);
+    --na-gap: clamp(1rem, 1.7vw, 1.75rem);
+    --na-row-gap: clamp(1.15rem, 2.4vw, 2.15rem);
+    --na-radius: clamp(12px, 1.15vw, 18px);
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    overflow: hidden;
+    padding: clamp(4rem, 9vw, 7rem) 0;
+    background:
+        radial-gradient(circle at 50% 12%, rgba(121,100,135, 0.42) 0, transparent 40%),
+        radial-gradient(circle at 8% 72%, rgba(121,100,135, 0.27) 0, transparent 44%),
+        radial-gradient(circle at 94% 84%, rgba(121,100,135, 0.22) 0, transparent 40%),
+        var(--na-near-black);
+}
+
+.nail-art::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(23,18,29, 0.34) 100%),
+        linear-gradient(180deg, rgba(23,18,29, 0.38), transparent 16%, transparent 84%, rgba(23,18,29, 0.38));
+}
+
+.nail-art__stage {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: clamp(1rem, 3vw, 2.5rem) 0;
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #17121D 7%, #17121D 93%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #17121D 7%, #17121D 93%, transparent 100%);
+}
+
+.nail-art__stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        rgba(23,18,29, 0.94) 0%,
+        rgba(23,18,29, 0.68) 6%,
+        rgba(23,18,29, 0.18) 16%,
+        transparent 28%,
+        transparent 72%,
+        rgba(23,18,29, 0.18) 84%,
+        rgba(23,18,29, 0.68) 94%,
+        rgba(23,18,29, 0.94) 100%
+    );
+    -webkit-backdrop-filter: blur(2.5px);
+    backdrop-filter: blur(2.5px);
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        #17121D 0%,
+        #17121D 12%,
+        transparent 28%,
+        transparent 72%,
+        #17121D 88%,
+        #17121D 100%
+    );
+    mask-image: linear-gradient(
+        90deg,
+        #17121D 0%,
+        #17121D 12%,
+        transparent 28%,
+        transparent 72%,
+        #17121D 88%,
+        #17121D 100%
+    );
+}
+
+.nail-art__scene {
+    display: flex;
+    flex-direction: column;
+    gap: var(--na-row-gap);
+    width: 112%;
+    margin-left: -6%;
+    transform-style: preserve-3d;
+    transform:
+        rotateX(calc(8deg + var(--na-parallax-rx, 0deg)))
+        rotateY(-15deg)
+        translateZ(var(--na-parallax-z, 0px));
+    will-change: transform;
+}
+
+.nail-art__row,
+.nail-art__track,
+.nail-art__set,
+.nail-art__card {
+    transform-style: preserve-3d;
+}
+
+.nail-art__row {
+    position: relative;
+    width: 100%;
+}
+
+.nail-art__track {
+    display: flex;
+    width: max-content;
+    animation-name: na-marquee-left;
+    animation-duration: var(--na-duration, 70s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    will-change: transform;
+}
+
+.nail-art__row:nth-child(2n) .nail-art__track {
+    animation-name: na-marquee-right;
+}
+
+.nail-art.is-paused .nail-art__track {
+    animation-play-state: paused;
+}
+
+.nail-art__set {
+    display: flex;
+    flex: 0 0 auto;
+    gap: var(--na-gap);
+    padding-right: var(--na-gap);
+}
+
+.nail-art__card {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    width: var(--na-card-width);
+    aspect-ratio: 4 / 5;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid rgba(176,155,184, 0.2);
+    border-radius: var(--na-radius);
+    background:
+        radial-gradient(circle at 50% 30%, rgba(121,100,135, 0.38), transparent 58%),
+        linear-gradient(145deg, #302538 0%, #17121D 58%, #302538 100%);
+    box-shadow:
+        0 26px 55px rgba(81,64,95, 0.54),
+        0 8px 18px rgba(23,18,29, 0.44);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.nail-art__media {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nail-art__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.55s ease;
+}
+
+.nail-art__card.is-loaded .nail-art__img {
+    opacity: 1;
+}
+
+.nail-art__card.is-missing .nail-art__img {
+    display: none;
+}
+
+.nail-art__label {
+    position: relative;
+    z-index: 2;
+    padding: 0.55rem 0.7rem 0.6rem;
+    color: rgba(176,155,184, 0.72);
+    background: linear-gradient(180deg, rgba(23,18,29, 0.1), rgba(23,18,29, 0.92));
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@keyframes na-marquee-left {
+    from {
+        transform: translate3d(23,18,29);
+    }
+
+    to {
+        transform: translate3d(calc(var(--na-loop, 1200px) * -1), 0, 0);
+    }
+}
+
+@keyframes na-marquee-right {
+    from {
+        transform: translate3d(calc(var(--na-loop, 1200px) * -1), 0, 0);
+    }
+
+    to {
+        transform: translate3d(23,18,29);
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .nail-art__card:hover {
+        z-index: 3;
+        border-color: rgba(176,155,184, 0.52);
+        box-shadow:
+            0 0 0 1px rgba(176,155,184, 0.26),
+            0 0 34px rgba(176,155,184, 0.24),
+            0 0 70px rgba(121,100,135, 0.36),
+            0 34px 72px rgba(81,64,95, 0.7);
+        transform: translateZ(58px) scale(1.035);
+    }
+}
+
+@media (max-width: 1100px) {
+    .nail-art {
+        --na-card-width: clamp(168px, 20vw, 235px);
+        --na-gap: clamp(0.85rem, 2vw, 1.4rem);
+    }
+
+    .nail-art__scene {
+        width: 108%;
+        margin-left: -4%;
+    }
+}
+
+@media (max-width: 768px) {
+    .nail-art {
+        --na-card-width: clamp(150px, 29vw, 205px);
+        --na-gap: clamp(0.75rem, 2.6vw, 1.1rem);
+        --na-row-gap: clamp(0.9rem, 3vw, 1.35rem);
+        padding: clamp(3rem, 8vw, 4.5rem) 0;
+    }
+
+    .nail-art__stage {
+        perspective: 900px;
+    }
+
+    .nail-art__scene {
+        width: 104%;
+        margin-left: -2%;
+        transform:
+            rotateX(calc(6deg + var(--na-parallax-rx, 0deg)))
+            rotateY(-8deg)
+            translateZ(var(--na-parallax-z, 0px));
+    }
+
+    .nail-art__row:nth-child(3) {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .nail-art {
+        --na-card-width: clamp(154px, 45vw, 208px);
+    }
+
+    .nail-art__row:nth-child(2) {
+        display: none;
+    }
+
+    .nail-art__stage::after {
+        -webkit-backdrop-filter: blur(1.5px);
+        backdrop-filter: blur(1.5px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nail-art__stage {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.5rem 0 1rem;
+        perspective: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+        overscroll-behavior-x: contain;
+        scrollbar-color: rgba(176,155,184, 0.28) transparent;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nail-art__stage::after {
+        display: none;
+    }
+
+    .nail-art__scene,
+    .nail-art__row {
+        width: max-content;
+    }
+
+    .nail-art__scene {
+        margin-left: 0;
+        transform: none;
+    }
+
+    .nail-art__track {
+        animation: none !important;
+    }
+
+    .nail-art__set[aria-hidden='true'] {
+        display: none;
+    }
+
+    .nail-art__row:nth-child(2),
+    .nail-art__row:nth-child(3) {
+        margin-top: var(--na-gap);
+    }
+
+    .nail-art__card {
+        transition: none;
+    }
+
+    .nail-art__card:hover {
+        transform: none;
+    }
+}

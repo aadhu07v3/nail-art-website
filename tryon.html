@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nail Try-On | Lumière Noire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/tryon.css">
+    <script src="js/theme.js" defer></script>
+    <script src="js/bokeh-galaxy.js" defer></script>
+</head>
+<body>
+    <div class="page-glow" aria-hidden="true"></div>
+    <nav class="nav" aria-label="Main navigation">
+        <div class="nav-container">
+            <a class="logo" href="index.html">Lumière Noire</a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="shapes.html">Shapes</a></li>
+                <li><a href="nailtypes.html">Nail Types</a></li>
+                <li><a href="tryon.html" class="is-active" aria-current="page">Try On</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#book">Book Now</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="tryon-main">
+        <header class="tryon-header">
+            <h1>Design Your Nails</h1>
+            <p>Upload your hand, pick a style, see it on your nails.</p>
+        </header>
+
+        <section class="studio" aria-label="Nail try-on studio">
+            <div class="upload-shell" id="upload-shell" data-glow-frame>
+                <canvas class="glow-layer" aria-hidden="true"></canvas>
+                <div class="upload-frame" id="upload-zone" role="button" tabindex="0" aria-label="Upload a hand photo">
+                    <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp,image/*" hidden>
+                    <div class="upload-empty" id="upload-empty">
+                        <svg class="upload-icon" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M24 32V10M24 10l-8 8M24 10l8 8M8 32v7h32v-7"/>
+                        </svg>
+                        <strong>Drop your hand photo here or click to upload</strong>
+                        <span>Back of hand, fingers spread, good light</span>
+                    </div>
+                    <canvas id="photo-canvas" class="photo-canvas" aria-label="Uploaded hand photo"></canvas>
+                    <canvas id="overlay-canvas" class="overlay-canvas" aria-label="Nail design overlay"></canvas>
+                    <div class="marker-layer" id="marker-layer"></div>
+                    <button type="button" class="change-photo" id="change-photo">Change photo</button>
+                    <p class="upload-error" id="upload-error" role="alert"></p>
+                </div>
+            </div>
+
+            <div class="privacy-note"><span aria-hidden="true">●</span> Your photo never leaves your device.</div>
+            <p class="marker-hint" id="marker-hint">Drag each marker onto a nail, then rotate and resize it.</p>
+
+            <div class="option-buttons" role="tablist" aria-label="Try-on options">
+                <button type="button" class="option-button is-active" id="shape-tab" aria-expanded="true" aria-controls="shape-panel" aria-pressed="true" data-panel="shape-panel">
+                    <span class="button-icon" aria-hidden="true">◇</span>Shape
+                </button>
+                <button type="button" class="option-button" id="type-tab" aria-expanded="false" aria-controls="type-panel" aria-pressed="false" data-panel="type-panel">
+                    <span class="button-icon" aria-hidden="true">◫</span>Nail Type
+                </button>
+                <button type="button" class="option-button" id="color-tab" aria-expanded="false" aria-controls="color-panel" aria-pressed="false" data-panel="color-panel">
+                    <span class="button-icon" aria-hidden="true">◉</span>Colour &amp; Design
+                </button>
+            </div>
+
+            <div class="panels" aria-live="polite">
+                <section class="options-panel is-open" id="shape-panel" role="tabpanel" aria-labelledby="shape-tab">
+                    <div class="shape-grid" id="shape-grid"></div>
+                    <fieldset class="apply-mode">
+                        <legend>Apply shape</legend>
+                        <label><input type="radio" name="apply-mode" value="all" checked> Apply to all nails</label>
+                        <label><input type="radio" name="apply-mode" value="selected"> Selected nail only</label>
+                    </fieldset>
+                </section>
+
+                <section class="options-panel" id="type-panel" role="tabpanel" aria-labelledby="type-tab" hidden>
+                    <div class="type-list" id="type-list"></div>
+                    <fieldset class="length-control">
+                        <legend>Length</legend>
+                        <div id="length-options" class="segmented"></div>
+                    </fieldset>
+                    <fieldset class="finish-control">
+                        <legend>Finish</legend>
+                        <div id="finish-options" class="finish-grid"></div>
+                    </fieldset>
+                </section>
+
+                <section class="options-panel" id="color-panel" role="tabpanel" aria-labelledby="color-tab" hidden>
+                    <div class="colour-controls">
+                        <label>Primary colour <input id="primary-color" type="color" value="#796487"></label>
+                        <label>Gradient colour <input id="secondary-color" type="color" value="#B09BB8"></label>
+                        <label>Opacity <input id="opacity" type="range" min="20" max="100" value="90"></label>
+                    </div>
+                    <div class="swatches" id="swatches" aria-label="Colour palette"></div>
+                    <fieldset>
+                        <legend>Design preset</legend>
+                        <div class="design-grid" id="design-grid"></div>
+                    </fieldset>
+                    <label class="intensity-control">Design intensity <input id="intensity" type="range" min="0" max="100" value="55"></label>
+                </section>
+            </div>
+
+            <div class="action-row">
+                <button type="button" class="action-button" id="reset-button">Reset</button>
+                <button type="button" class="action-button is-primary" id="download-button">Download Image</button>
+                <a class="action-button" href="index.html#book">Book This Look</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <a class="logo footer-logo" href="index.html">Lumière Noire</a>
+            <p>&copy; <span id="year"></span> Lumière Noire. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/glowborder.js"></script>
+    <script src="js/tryon.js"></script>
+</body>
+</html>

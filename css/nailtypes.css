@@ -1,0 +1,402 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #17121D;
+    --surface: #302538;
+    --border: #51405F;
+    --accent: #796487;
+    --muted-text: #B09BB8;
+    --primary-text: #E8DDEB;
+    --oxblood: var(--accent);
+    --near-black: var(--background);
+    --silver: var(--muted-text);
+    --soft-white: var(--primary-text);
+    --bg-dim: 0.35;
+    --ease: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    isolation: isolate;
+    background-color: var(--background);
+    background-image: radial-gradient(circle at 75% 20%, rgba(121,100,135, 0.16), transparent 38%);
+    background-attachment: fixed;
+    color: var(--soft-white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+    display: none;
+}
+
+body::after {
+    display: none;
+}
+
+.page-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 0%, rgba(121,100,135, 0.2), transparent 45%);
+}
+
+a { color: inherit; }
+
+.nav {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.logo {
+    font-family: "Cinzel", "Playfair Display", Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--silver);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    position: relative;
+    color: var(--soft-white);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--silver);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.is-active { color: var(--silver); }
+.nav-links a:hover::after,
+.nav-links a.is-active::after { width: 100%; }
+
+.nailtypes-main {
+    position: relative;
+    z-index: 1;
+}
+
+.nailtypes-header {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+}
+
+.eyebrow {
+    margin-bottom: 1rem;
+    color: var(--silver);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+.nailtypes-header h1 {
+    font-family: "Cinzel", "Playfair Display", Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.08;
+    text-shadow: 0 0 34px rgba(121,100,135, 0.55);
+}
+
+.subtitle {
+    margin-top: 1rem;
+    color: var(--silver);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+}
+
+.nailtypes-carousel {
+    position: relative;
+    width: 100%;
+    height: clamp(520px, 68vh, 760px);
+    margin: 0 auto clamp(5rem, 9vw, 8rem);
+    overflow: hidden;
+    perspective: 1400px;
+    isolation: isolate;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+}
+
+.nailtypes-carousel:active { cursor: grabbing; }
+
+.nailtypes-carousel .nailtype-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    aspect-ratio: auto;
+    opacity: 0;
+    transform: none;
+    transition: none;
+    will-change: transform, opacity;
+    pointer-events: none;
+}
+
+.nailtypes-carousel .nailtype-card.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+.noscript-message {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    color: var(--silver);
+    text-align: center;
+}
+
+.nailtype-card {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    min-width: 0;
+    border-radius: 22px;
+    outline: none;
+    opacity: 0;
+    transform: perspective(1000px) rotateX(40deg) translateY(34px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    transition-delay: calc(var(--i, 0) * 100ms);
+}
+
+.nailtype-card.is-visible {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) translateY(0);
+}
+
+.nailtype-card:focus-visible {
+    outline: 2px solid rgba(176,155,184, 0.72);
+    outline-offset: 4px;
+}
+
+.nailtype-card__tilt {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.18s ease-out;
+    will-change: transform;
+}
+
+.nailtype-card__inner {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border: 1px solid rgba(176,155,184, 0.17);
+    border-radius: inherit;
+    background: rgba(121,100,135, 0.24);
+    box-shadow: 0 24px 55px rgba(81,64,95, 0.48), 0 4px 14px rgba(23,18,29, 0.42);
+}
+
+.nailtype-card.is-active .nailtype-card__inner {
+    border-color: rgba(176,155,184, 0.38);
+}
+
+.nailtype-card video,
+.nailtype-card .nailtype-animation {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease);
+}
+
+.nailtype-card.has-video video,
+.nailtype-card.has-video .nailtype-animation { opacity: 1; }
+
+.nailtype-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(121,100,135, 0.28), transparent 34%),
+        linear-gradient(145deg, rgba(176,155,184, 0.08), rgba(121,100,135, 0.42));
+}
+
+.nailtype-placeholder span {
+    font-family: "Cinzel", "Playfair Display", Georgia, serif;
+    color: var(--silver);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.process-overlay {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 38%;
+    max-height: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(0.8rem, 2vw, 1.2rem);
+    color: var(--soft-white);
+    background: linear-gradient(to bottom, transparent 0%, rgba(23,18,29, 0.9) 100%);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+.nailtype-card.is-active .process-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.process-name {
+    margin-bottom: 0.35rem;
+    font-family: "Cinzel", "Playfair Display", Georgia, serif;
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+}
+
+.process-lines {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.process-lines li {
+    font-size: clamp(0.78rem, 1vw, 0.875rem);
+    line-height: 1.28;
+    color: var(--soft-white);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+.nailtype-card.is-active .process-lines li {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--line, 0) * 120ms);
+}
+
+.manual-play {
+    position: absolute;
+    z-index: 5;
+    right: 0.75rem;
+    top: 0.75rem;
+    pointer-events: auto;
+    border: 1px solid rgba(176,155,184, 0.48);
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    background: rgba(23,18,29, 0.82);
+    color: var(--soft-white);
+    font: 600 0.75rem "Cinzel", serif;
+    cursor: pointer;
+}
+
+.glow-layer {
+    position: absolute;
+    z-index: 8;
+    left: 50%;
+    top: 50%;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.nailtype-card.is-static-glow .nailtype-card__inner {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(rgba(23,18,29, 0.94), rgba(23,18,29, 0.94)) padding-box,
+        linear-gradient(135deg, rgba(176,155,184, 0.8), rgba(121,100,135, 0.6), rgba(176,155,184, 0.8)) border-box;
+}
+
+.footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(176,155,184, 0.1);
+}
+
+.footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    color: var(--silver);
+}
+
+.footer-logo { font-size: 1.2rem; }
+
+@media (max-width: 680px) {
+    body {
+        background-attachment: scroll;
+    }
+    body::before {
+        position: absolute;
+        background-position: 60% center;
+        background-attachment: scroll;
+    }
+    .nav-container { padding: 0 1.25rem; }
+    .nav-links {
+        width: 100%;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .nailtypes-carousel { height: 520px; }
+    .footer-inner {
+        padding-inline: 1.25rem;
+        text-align: center;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .nailtypes-carousel { cursor: default; }
+    .nailtype-card,
+    .nailtype-card__tilt,
+    .process-overlay,
+    .process-lines li,
+    .nailtype-card video,
+    .nailtype-card .nailtype-animation { transition: none !important; }
+    .nailtype-card__inner { filter: none !important; }
+}
