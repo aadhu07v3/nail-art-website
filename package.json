@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node dev-server.js",
-    "start": "node dev-server.js"
+    "start": "node dev-server.js",
+    "media:data": "node scripts/generate-media-data.js",
+    "shapes:data": "node scripts/generate-media-data.js"
   }
 }

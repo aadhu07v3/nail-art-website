@@ -1,59 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Elegance - Nail Art</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/nailart.css">
-    <script src="js/theme.js" defer></script>
-    <script src="js/bokeh-galaxy.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aura Atelier — bespoke luxury nail art crafted with precision and elegance." />
+  <title>Aura Atelier</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Enables the scroll-reveal styles only when JS is available -->
+  <script>document.documentElement.classList.add("js");</script>
+
+  <link rel="stylesheet" href="css/atelier.css" />
 </head>
 <body>
-    <div class="preloader"></div>
-    
-    <!-- Curtain panels for reveal animation -->
-    <div class="curtain-container">
-        <div class="curtain left"></div>
-        <div class="curtain right"></div>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ═══════════════════════════════════════
+       STICKY HEADER (light)
+  ═══════════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <a href="#home" class="logo" aria-label="Aura Atelier home">
+        <span class="logo-primary">AURA</span>
+        <span class="logo-sub">ATELIER</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#home"         class="nav-link" data-nav="home">Home</a></li>
+          <li><a href="#services"     class="nav-link" data-nav="services">Services</a></li>
+          <li><a href="shapes.html"   class="nav-link" data-nav="shapes">Shapes</a></li>
+          <li><a href="nail-types.html" class="nav-link" data-nav="nail-types">Nail Types</a></li>
+          <li><a href="#testimonials" class="nav-link" data-nav="testimonials">Reviews</a></li>
+          <li><a href="#contact"      class="nav-link" data-nav="contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- CTA + Hamburger -->
+      <div class="header-actions">
+        <a href="#contact" class="btn btn-primary header-cta">Book Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
     </div>
-    
-    <!-- Hero section -->
+
+    <!-- Mobile nav drawer -->
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+      <ul class="mobile-nav-list">
+        <li><a href="#home"         class="mobile-nav-link">Home</a></li>
+        <li><a href="#services"     class="mobile-nav-link">Services</a></li>
+        <li><a href="shapes.html"   class="mobile-nav-link">Shapes</a></li>
+        <li><a href="nail-types.html" class="mobile-nav-link">Nail Types</a></li>
+        <li><a href="#testimonials" class="mobile-nav-link">Reviews</a></li>
+        <li><a href="#contact"      class="mobile-nav-link">Contact</a></li>
+        <li><a href="#contact"      class="mobile-nav-link mobile-cta">Book Now</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════
+         1. HERO
+    ═══════════════════════════════════════ -->
     <section class="hero" id="home">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="hero-overlay"></div>
-        
-        <!-- Navigation -->
-        <nav class="nav">
-            <div class="nav-container">
-                <div class="logo">Lumière Noire</div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="shapes.html">Shapes</a></li>
-                    <li><a href="nailtypes.html">Nail Types</a></li>
-                    <li><a href="tryon.html">Try On</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#book">Book Now</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
-        
-        <!-- Hero content -->
-        <div class="hero-content">
-            <h1 class="hero-headline">
-                <span class="headline-line">Dark Elegance,</span>
-                <span class="headline-line">Crafted on Every Nail</span>
-            </h1>
-            <p class="hero-subtext">Bespoke gothic nail art for the refined and mysterious.</p>
-            <a href="#book" class="cta-button">Book Your Set</a>
+      <div class="hero-inner">
+        <p class="eyebrow fade-up">Luxury Nail Artistry</p>
+        <h1 class="hero-headline fade-up delay-1">
+          Where Every Nail<br />Becomes a <em>Masterpiece</em>
+        </h1>
+        <p class="hero-subtext fade-up delay-2">
+          Bespoke nail art crafted with precision, passion, and couture-level care.<br />
+          Your hands deserve nothing less.
+        </p>
+        <div class="hero-actions fade-up delay-3">
+          <a href="#services" class="btn btn-primary">Explore Services</a>
         </div>
+      </div>
+      <div class="hero-gradient" aria-hidden="true"></div>
     </section>
 
-    <script src="app.js"></script>
-    <script src="js/nailart.js"></script>
+    
+
+    <!-- ═══════════════════════════════════════
+         3. SERVICES (cherry-velvet bg)
+    ═══════════════════════════════════════ -->
+    <section class="services section alt-bg" id="services">
+      <div class="container">
+        <div class="section-intro fade-up">
+          <p class="section-label">What We Offer</p>
+          <h2 class="section-heading">Our Signature Services</h2>
+          <p class="section-subtext">
+            Each service is designed around your vision and executed with gallery-worthy precision.
+          </p>
+        </div>
+
+        <div class="services-grid">
+
+          <article class="service-card fade-up delay-1">
+            <div class="card-icon" aria-hidden="true">✦</div>
+            <h3 class="card-title">Bespoke Nail Art</h3>
+            <p class="card-text">
+              Fully hand-painted, one-of-a-kind designs. From minimalist line work to maximalist
+              floral scenes — we paint your personality.
+            </p>
+            <a href="#contact" class="card-link">Book this →</a>
+          </article>
+
+          <article class="service-card fade-up delay-2">
+            <div class="card-icon" aria-hidden="true">◈</div>
+            <h3 class="card-title">Gel & Builder Extensions</h3>
+            <p class="card-text">
+              Durable, flawless extensions sculpted in gel or acrylic. Long-lasting wear with a
+              naturally luminous finish that feels effortless.
+            </p>
+            <a href="#contact" class="card-link">Book this →</a>
+          </article>
+
+          <article class="service-card fade-up delay-3">
+            <div class="card-icon" aria-hidden="true">❋</div>
+            <h3 class="card-title">Nail Spa & Restoration</h3>
+            <p class="card-text">
+              Revive damaged nails with our signature treatment — a ritual combining deep nourishment,
+              shaping, and a fresh, polished look.
+            </p>
+            <a href="#contact" class="card-link">Book this →</a>
+          </article>
+
+          <article class="service-card fade-up delay-1">
+            <div class="card-icon" aria-hidden="true">⬡</div>
+            <h3 class="card-title">Press-On Collections</h3>
+            <p class="card-text">
+              Custom-made, wear-at-home press-ons crafted in-studio. Each set is hand-painted and
+              sized to your exact nail measurements.
+            </p>
+            <a href="#contact" class="card-link">Book this →</a>
+          </article>
+
+          <article class="service-card fade-up delay-2">
+            <div class="card-icon" aria-hidden="true">✿</div>
+            <h3 class="card-title">Bridal & Event Packages</h3>
+            <p class="card-text">
+              Tailored group packages for your most memorable occasions. We handle everything from
+              trial sessions to on-the-day application.
+            </p>
+            <a href="#contact" class="card-link">Book this →</a>
+          </article>
+
+          <article class="service-card fade-up delay-3">
+            <div class="card-icon" aria-hidden="true">◉</div>
+            <h3 class="card-title">Nail Shape Consultation</h3>
+            <p class="card-text">
+              Not sure which shape suits your hand? Our specialist guides you through options —
+              from almond to coffin — finding your perfect silhouette.
+            </p>
+            <a href="#contact" class="card-link">Book a consultation →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- ═══════════════════════════════════════
+         5. TESTIMONIALS (cherry-velvet bg)
+    ═══════════════════════════════════════ -->
+    <section class="testimonials section alt-bg" id="testimonials">
+      <div class="container">
+        <div class="section-intro fade-up">
+          <p class="section-label">Client Love</p>
+          <h2 class="section-heading">What Our Clients Say</h2>
+        </div>
+
+        <div class="testimonials-grid">
+
+          <blockquote class="testimonial-card fade-up delay-1">
+            <p class="testimonial-text">
+              "Aura Atelier completely changed how I see nail art. The attention to detail is unreal —
+              I've never had so many compliments on a single set."
+            </p>
+            <footer class="testimonial-author">
+              <span class="author-name">Priya S.</span>
+              <span class="author-detail">Bridal package client</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="testimonial-card fade-up delay-2">
+            <p class="testimonial-text">
+              "The studio atmosphere is pure luxury. From the moment I walked in to the last stroke
+              of polish, I felt like a queen. My coffin set lasted six weeks flawlessly."
+            </p>
+            <footer class="testimonial-author">
+              <span class="author-name">Meera R.</span>
+              <span class="author-detail">Monthly gel client</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="testimonial-card fade-up delay-3">
+            <p class="testimonial-text">
+              "Booked the press-on custom set for my photoshoot and they were absolutely
+              stunning. Everyone on set thought they were salon-fresh extensions."
+            </p>
+            <footer class="testimonial-author">
+              <span class="author-name">Aanya K.</span>
+              <span class="author-detail">Press-on collection</span>
+            </footer>
+          </blockquote>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         6. CONTACT
+    ═══════════════════════════════════════ -->
+    <section class="contact section" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+
+          <div class="contact-info fade-left">
+            <p class="section-label">Get in Touch</p>
+            <h2 class="section-heading">Book Your<br />Appointment</h2>
+            <p class="body-text">
+              Ready to elevate your nails? Reach out and we'll craft an experience tailored
+              entirely to you.
+            </p>
+            <ul class="contact-details">
+              <li>
+                <span class="detail-label">Studio</span>
+                <span class="detail-value">12 Velvet Lane, South Mumbai — 400 001</span>
+              </li>
+              <li>
+                <span class="detail-label">Hours</span>
+                <span class="detail-value">Tue – Sun, 10 am – 7 pm</span>
+              </li>
+              <li>
+                <span class="detail-label">Email</span>
+                <span class="detail-value"><a href="mailto:hello@auraatelier.in">hello@auraatelier.in</a></span>
+              </li>
+              <li>
+                <span class="detail-label">Phone</span>
+                <span class="detail-value"><a href="tel:+919876543210">+91 98765 43210</a></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-form-wrap fade-right">
+            <form class="contact-form" id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="service">Service Interest</label>
+                <select id="service" name="service">
+                  <option value="" disabled selected>Choose a service…</option>
+                  <option>Bespoke Nail Art</option>
+                  <option>Gel &amp; Builder Extensions</option>
+                  <option>Nail Spa &amp; Restoration</option>
+                  <option>Press-On Collections</option>
+                  <option>Bridal &amp; Event Package</option>
+                  <option>Shape Consultation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                  <textarea id="message" name="message" rows="5" placeholder="Tell us about your vision…" autocomplete="off"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full">Send Enquiry</button>
+              <p class="form-success" id="form-success" aria-live="polite"></p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER (light)
+  ═══════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner container">
+
+      <div class="footer-brand">
+        <a href="#home" class="logo" aria-label="Aura Atelier home">
+          <span class="logo-primary">AURA</span>
+          <span class="logo-sub">ATELIER</span>
+        </a>
+        <p class="footer-tagline">Luxury nail artistry for the discerning few.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h4 class="footer-nav-label">Navigate</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="shapes.html">Shapes</a></li>
+          <li><a href="nail-types.html">Nail Types</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-social">
+        <h4 class="footer-nav-label">Follow Us</h4>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.22-5.17 1.22-5.17s-.31-.62-.31-1.54c0-1.44.84-2.52 1.88-2.52.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.54 1.88 1.85 0 3.1-2.37 3.1-5.16 0-2.14-1.44-3.63-3.5-3.63-2.39 0-3.79 1.79-3.79 3.64 0 .72.28 1.49.62 1.91a.25.25 0 0 1 .06.24c-.06.26-.21.84-.24.95-.04.15-.13.18-.3.11-1.13-.53-1.84-2.19-1.84-3.52 0-2.87 2.09-5.5 6.02-5.5 3.16 0 5.62 2.25 5.62 5.26 0 3.14-1.98 5.66-4.72 5.66-.92 0-1.79-.48-2.09-1.04l-.57 2.12c-.21.79-.76 1.78-1.13 2.38.85.26 1.75.4 2.68.4 5.52 0 10-4.48 10-10S17.52 2 12 2Z"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.19 8.19 0 0 0 4.79 1.52V6.76a4.85 4.85 0 0 1-1.02-.07Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="year">2026</span> Aura Atelier. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
 </body>
 </html>

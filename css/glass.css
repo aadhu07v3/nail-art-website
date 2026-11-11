@@ -1,0 +1,50 @@
+/* Reuse on Home or Shapes: link css/glass.css, then add .glass, .glass-card or .glass-btn. */
+
+:root {
+  --vanilla-silk-rgb: 240, 230, 218;
+  --bordeaux-noir-rgb: 50, 24, 32;
+  --glass-bg: rgba(var(--vanilla-silk-rgb), 0.08);
+  --glass-bg-hover: rgba(var(--vanilla-silk-rgb), 0.14);
+  --glass-border: rgba(var(--vanilla-silk-rgb), 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --glass-fallback: rgba(var(--bordeaux-noir-rgb), 0.85);
+}
+
+.glass,
+.glass-card,
+.glass-btn {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card,
+.glass-btn {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card:hover,
+.glass-btn:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Solid fallback for browsers without backdrop-filter support. */
+@supports not ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+  .glass,
+  .glass-card,
+  .glass-btn {
+    background: var(--glass-fallback);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-card:hover,
+  .glass-btn:hover {
+    transform: none;
+  }
+}
