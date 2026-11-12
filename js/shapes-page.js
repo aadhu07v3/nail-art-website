@@ -5,8 +5,6 @@
   var filterList = document.getElementById("shape-filter-list");
   var filterCount = document.getElementById("shape-filter-count");
   var sectionsRoot = document.getElementById("shape-sections");
-  var filmsRoot = document.getElementById("shape-films-grid");
-  var filmsSection = document.getElementById("shape-films");
   var heroCount = document.getElementById("shapes-count");
   var lightbox = document.getElementById("shape-lightbox");
   var lightboxStage = document.getElementById("shape-lightbox-stage");
@@ -127,58 +125,6 @@
     return figure;
   }
 
-  function createFilmCard(film, filmIndex) {
-    var galleryIndex = gallery.length;
-    gallery.push({
-      type: "video",
-      sources: film.sources || [],
-      poster: film.poster || "",
-      shapeName: film.name
-    });
-
-    var figure = createEl(
-      "figure",
-      "shape-media-card is-video fade-up delay-" + ((filmIndex % 3) + 1)
-    );
-
-    var video = document.createElement("video");
-    video.controls = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.preload = "metadata";
-    if (film.poster) video.poster = film.poster;
-    video.setAttribute("aria-label", film.name + " nail application film");
-
-    (film.sources || []).forEach(function (source) {
-      var sourceEl = document.createElement("source");
-      sourceEl.src = source.src;
-      sourceEl.type = source.type;
-      video.appendChild(sourceEl);
-    });
-
-    var button = createEl("button", "shape-media-open shape-media-open--corner");
-    button.type = "button";
-    button.setAttribute("data-gallery-index", String(galleryIndex));
-    button.setAttribute("aria-label", "Open " + film.name + " film in viewer");
-    var icon = createEl("span", "shape-media-expand-icon");
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = "\u2922";
-    button.appendChild(icon);
-
-    var caption = createEl("figcaption", "shape-media-caption");
-    var captionName = createEl("span", "shape-media-name");
-    captionName.textContent = film.name;
-    var captionMeta = createEl("span", "shape-media-meta");
-    captionMeta.textContent = "Technique film";
-    caption.appendChild(captionName);
-    caption.appendChild(captionMeta);
-
-    figure.appendChild(video);
-    figure.appendChild(button);
-    figure.appendChild(caption);
-    return figure;
-  }
-
   function createShapeSection(shape, shapeIndex) {
     var section = createEl("section", "shape-section");
     section.id = "shape-" + shape.slug;
@@ -216,18 +162,6 @@
     sections.push(section);
     sectionsRoot.appendChild(section);
   });
-
-  if (
-    filmsRoot &&
-    Array.isArray(window.SHAPE_VIDEO_DATA) &&
-    window.SHAPE_VIDEO_DATA.length
-  ) {
-    window.SHAPE_VIDEO_DATA.forEach(function (film, filmIndex) {
-      filmsRoot.appendChild(createFilmCard(film, filmIndex));
-    });
-  } else if (filmsSection) {
-    filmsSection.hidden = true;
-  }
 
   function createFilterButton(label, slug) {
     var button = createEl("button", "shape-filter-button");

@@ -411,8 +411,6 @@ function serializeShapes(shapes, videoData, unplaced) {
     "",
     "window.SHAPE_DATA = " + JSON.stringify(shapes, null, 2) + ";",
     "",
-    "window.SHAPE_VIDEO_DATA = " + JSON.stringify(videoData, null, 2) + ";",
-    "",
     "window.SHAPE_UNPLACED = " + JSON.stringify(unplaced, null, 2) + ";",
     ""
   ].join("\n");
@@ -545,6 +543,10 @@ function build() {
     if (entry.extension === ".webp") webpByBase.set(entry.base, entry);
   });
 
+  const videoBases = new Set(
+    mediaEntries.filter((entry) => entry.isVideo).map((entry) => entry.base)
+  );
+
   mediaEntries.forEach((entry) => {
     if (!entry.isVideo) return;
 
@@ -592,6 +594,8 @@ function build() {
     }
 
     if (nailTypeSlug) {
+      if (!entry.isVideo && videoBases.has(entry.base)) return;
+
       const group = groupFor(
         nailTypes,
         nailTypeSlug,

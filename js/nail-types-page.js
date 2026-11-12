@@ -76,7 +76,12 @@
   function groupFiles(files) {
     var groups = [];
     var seenVideoPaths = new Set();
+    var videoBases = new Set();
     var hasVideo = false;
+
+    files.forEach(function (file) {
+      if (file.type === "video") videoBases.add(file.base);
+    });
 
     files.forEach(function (file) {
       if (file.type === "video") {
@@ -97,6 +102,8 @@
         });
         return;
       }
+
+      if (videoBases.has(file.base)) return;
 
       groups.push({
         type: "image",

@@ -389,16 +389,6 @@ body.lightbox-open {
   text-align: center;
 }
 
-.shape-films {
-  padding-block: clamp(3.5rem, 7vw, 6rem);
-  background-color: var(--bordeaux-noir);
-  border-block: 1px solid color-mix(in srgb, var(--warm-greige) 18%, transparent);
-}
-
-.shape-films[hidden] {
-  display: none;
-}
-
 .shapes-cta {
   padding-block: clamp(4rem, 8vw, 6.5rem);
   background-color: var(--bordeaux-noir);

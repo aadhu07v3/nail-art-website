@@ -13,12 +13,6 @@ window.NAIL_TYPE_DATA = [
         "base": "gel",
         "format": "mp4",
         "poster": "./assets/media/posters/gel-poster.webp"
-      },
-      {
-        "type": "image",
-        "src": "./assets/media/gel.webp",
-        "base": "gel",
-        "format": "webp"
       }
     ],
     "kind": "nail-type"
@@ -34,12 +28,6 @@ window.NAIL_TYPE_DATA = [
         "base": "acrylic",
         "format": "mp4",
         "poster": "./assets/media/posters/acrylic-poster.webp"
-      },
-      {
-        "type": "image",
-        "src": "./assets/media/acrylic.webp",
-        "base": "acrylic",
-        "format": "webp"
       }
     ],
     "kind": "nail-type"
@@ -55,12 +43,6 @@ window.NAIL_TYPE_DATA = [
         "base": "builder-gel",
         "format": "mp4",
         "poster": "./assets/media/posters/builder-gel-poster.webp"
-      },
-      {
-        "type": "image",
-        "src": "./assets/media/builder-gel.webp",
-        "base": "builder-gel",
-        "format": "webp"
       }
     ],
     "kind": "nail-type"
@@ -76,12 +58,6 @@ window.NAIL_TYPE_DATA = [
         "base": "dip-powder",
         "format": "mp4",
         "poster": "./assets/media/posters/dip-powder-poster.webp"
-      },
-      {
-        "type": "image",
-        "src": "./assets/media/dip-powder.webp",
-        "base": "dip-powder",
-        "format": "webp"
       }
     ],
     "kind": "nail-type"
@@ -97,12 +73,6 @@ window.NAIL_TYPE_DATA = [
         "base": "fiberglass",
         "format": "mp4",
         "poster": "./assets/media/posters/fiberglass-poster.webp"
-      },
-      {
-        "type": "image",
-        "src": "./assets/media/fiberglass.webp",
-        "base": "fiberglass",
-        "format": "webp"
       }
     ],
     "kind": "nail-type"
@@ -118,12 +88,6 @@ window.NAIL_TYPE_DATA = [
         "base": "press-on",
         "format": "mp4",
         "poster": "./assets/media/posters/press-on-poster.webp"
-      },
-      {
-        "type": "image",
-        "src": "./assets/media/press-on.webp",
-        "base": "press-on",
-        "format": "webp"
       }
     ],
     "kind": "nail-type"
