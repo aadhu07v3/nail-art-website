@@ -1,0 +1,213 @@
+"use strict";
+
+/**
+ * Scans images/shapes recursively and writes js/shapes-data.js.
+ * Drop new images or videos into images/shapes (or a named subfolder)
+ * and run: npm run shapes:data
+ */
+
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = path.resolve(__dirname, "..");
+const MEDIA_ROOT = path.join(ROOT, "images", "shapes");
+const OUTPUT = path.join(ROOT, "js", "shapes-data.js");
+const PUBLIC_ROOT = "images/shapes";
+
+const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
+const VIDEO_EXTENSIONS = new Set([".mp4", ".webm", ".mov"]);
+
+const PREFERRED_ORDER = [
+  "almond",
+  "oval",
+  "round",
+  "square",
+  "squoval",
+  "coffin",
+  "stiletto",
+  "flare"
+];
+
+const DESCRIPTIONS = {
+  almond: "A softly tapered tip that elongates the finger with timeless elegance.",
+  coffin: "A dramatic squared tip with tapered sides for a bold, editorial finish.",
+  flare: "A flared, fan-like silhouette that brings statement energy to the set.",
+  oval: "A rounded, elongated shape that flatters every hand with a natural finish.",
+  round: "A classic, low-maintenance curve that keeps the look soft and polished.",
+  square: "Clean, straight sides and a flat tip for a crisp, modern statement.",
+  squoval: "The best of both worlds — square edges softened with a rounded finish.",
+  stiletto: "A sharp, pointed tip for high-impact glamour and dramatic length."
+};
+
+const FALLBACK_DESCRIPTION =
+  "A distinctive nail silhouette from the Aura Atelier collection.";
+
+function slugify(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function titleCase(value) {
+  return value
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function detectShapeSlug(relativePath, fileName) {
+  const parts = relativePath.split(path.sep).filter(Boolean);
+
+  if (parts.length > 1) {
+    return slugify(parts[0]) || "other";
+  }
+
+  let slug = slugify(path.basename(fileName, path.extname(fileName)));
+  slug = slug.replace(
+    /-(video|vid|clip|image|img|photo|pic|still|frame)(-\d+)?$/,
+    ""
+  );
+  slug = slug.replace(/-\d+$/, "");
+
+  return slug || "other";
+}
+
+function walk(directory) {
+  const entries = fs.readdirSync(directory, { withFileTypes: true });
+  const files = [];
+
+  entries.forEach((entry) => {
+    const fullPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...walk(fullPath));
+    } else if (entry.isFile()) {
+      files.push(fullPath);
+    }
+  });
+
+  return files;
+}
+
+function toPublicPath(fullPath) {
+  return path
+    .relative(ROOT, fullPath)
+    .split(path.sep)
+    .join("/");
+}
+
+function buildData() {
+  if (!fs.existsSync(MEDIA_ROOT)) {
+    throw new Error("Media folder not found: " + MEDIA_ROOT);
+  }
+
+  const allFiles = walk(MEDIA_ROOT).sort();
+  const shapes = new Map();
+  const unplaced = [];
+  const posterByBase = new Map();
+
+  allFiles.forEach((fullPath) => {
+    const extension = path.extname(fullPath).toLowerCase();
+    const publicPath = toPublicPath(fullPath);
+
+    if (IMAGE_EXTENSIONS.has(extension)) {
+      const base = publicPath.replace(/\.[^.]+$/, "");
+      posterByBase.set(base, publicPath);
+    }
+  });
+
+  allFiles.forEach((fullPath) => {
+    const extension = path.extname(fullPath).toLowerCase();
+    const isImage = IMAGE_EXTENSIONS.has(extension);
+    const isVideo = VIDEO_EXTENSIONS.has(extension);
+
+    if (!isImage && !isVideo) {
+      unplaced.push(toPublicPath(fullPath));
+      return;
+    }
+
+    const relative = path.relative(MEDIA_ROOT, fullPath);
+    const slug = detectShapeSlug(relative, path.basename(fullPath));
+    const publicPath = toPublicPath(fullPath);
+
+    if (!shapes.has(slug)) {
+      shapes.set(slug, {
+        slug,
+        name: titleCase(slug),
+        description: DESCRIPTIONS[slug] || FALLBACK_DESCRIPTION,
+        files: []
+      });
+    }
+
+    const media = { type: isVideo ? "video" : "image", src: publicPath };
+
+    if (isVideo) {
+      const base = publicPath.replace(/\.[^.]+$/, "");
+      if (posterByBase.has(base)) {
+        media.poster = posterByBase.get(base);
+      }
+    }
+
+    shapes.get(slug).files.push(media);
+  });
+
+  const ordered = Array.from(shapes.values()).sort((a, b) => {
+    const aIndex = PREFERRED_ORDER.indexOf(a.slug);
+    const bIndex = PREFERRED_ORDER.indexOf(b.slug);
+
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
+  return { shapes: ordered, unplaced, scanned: allFiles.length };
+}
+
+function serialize(data) {
+  const json = JSON.stringify(data.shapes, null, 2);
+  const unplacedJson = JSON.stringify(data.unplaced, null, 2);
+
+  return [
+    "/* Auto-generated by scripts/generate-shapes-data.js.",
+    "   Add media to images/shapes and run `npm run shapes:data` to refresh. */",
+    "",
+    "window.SHAPE_DATA = " + json + ";",
+    "",
+    "window.SHAPE_UNPLACED = " + unplacedJson + ";",
+    ""
+  ].join("\n");
+}
+
+function printSummary(data) {
+  console.log("Scanned " + data.scanned + " file(s) in " + MEDIA_ROOT);
+  console.log("");
+
+  data.shapes.forEach((shape) => {
+    console.log(
+      shape.name +
+        " (" +
+        shape.slug +
+        "): " +
+        shape.files.length +
+        " file(s)"
+    );
+    shape.files.forEach((file) => console.log("  - " + file.src));
+  });
+
+  if (data.unplaced.length) {
+    console.log("");
+    console.log("Unplaced files:");
+    data.unplaced.forEach((file) => console.log("  - " + file));
+  } else {
+    console.log("");
+    console.log("Unplaced files: none");
+  }
+}
+
+const data = buildData();
+fs.writeFileSync(OUTPUT, serialize(data), "utf8");
+printSummary(data);
+console.log("");
+console.log("Wrote " + OUTPUT);
