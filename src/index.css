@@ -128,6 +128,29 @@ h4,
   align-items: start;
 }
 
+/* Single-page scroll layout */
+#home,
+#services,
+#shapes,
+#nail-types,
+#testimonials,
+#faq,
+#book {
+  scroll-margin-top: 88px;
+}
+
+.nail-types-block {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  background: linear-gradient(
+    135deg,
+    var(--bordeaux-noir) 0%,
+    var(--cherry-velvet) 100%
+  );
+}
+
 /* --------------------------------------------------------------------------
    Shape flip cards (Kokonut UI CardFlip)
    -------------------------------------------------------------------------- */
@@ -817,7 +840,7 @@ body {
   border: 0;
   background: transparent;
   color: var(--vanilla-silk);
-  font-family: "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Josefin Slab", "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -947,3 +970,217 @@ body {
     background: rgba(var(--bordeaux-noir-rgb), 0.88);
   }
 }
+
+/* --------------------------------------------------------------------------
+   Home hero
+   -------------------------------------------------------------------------- */
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  width: min(100% - 3rem, 1240px);
+  text-align: left;
+}
+
+.hero-copy {
+  max-width: 640px;
+}
+
+.hero-headline {
+  margin-bottom: 1.5rem;
+  font-size: clamp(3.4rem, 8vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+}
+
+.hero-brand-aura {
+  display: block;
+}
+
+.hero-brand-atelier {
+  display: block;
+  color: var(--warm-greige);
+  font-family: "Amatic SC", "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  line-height: 0.85;
+  -webkit-text-stroke: 0.4px currentColor;
+}
+
+.hero-subtext {
+  max-width: 52ch;
+  margin: 0 0 2.25rem;
+}
+
+.hero-actions {
+  justify-content: flex-start;
+}
+
+.hero-visual {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  background: rgba(var(--vanilla-silk-rgb), 0.06);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(var(--bordeaux-noir-rgb), 0.52),
+    transparent 58%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-visual {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Booking dialog
+   -------------------------------------------------------------------------- */
+
+body.booking-open {
+  overflow: hidden;
+}
+
+.booking-section {
+  position: relative;
+  padding-block: clamp(4rem, 8vw, 7rem);
+  background-position: center;
+  background-size: cover;
+  border-top: 1px solid var(--glass-border);
+}
+
+.booking-inner {
+  display: flex;
+  justify-content: center;
+  width: min(100% - 3rem, 1200px);
+  margin-inline: auto;
+}
+
+.booking-section .booking-panel {
+  width: min(100%, 640px);
+  margin: 0;
+}
+
+.booking-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  overflow-y: auto;
+  background: rgba(var(--bordeaux-noir-rgb), 0.72);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+.booking-panel {
+  position: relative;
+  width: min(100%, 560px);
+  margin: auto;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border: 1px solid var(--glass-border);
+  border-radius: 26px;
+  background: linear-gradient(
+      150deg,
+      rgba(var(--vanilla-silk-rgb), 0.12),
+      rgba(var(--vanilla-silk-rgb), 0.03)
+    ),
+    rgba(var(--bordeaux-noir-rgb), 0.92);
+  color: var(--alpine-oat);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+}
+
+.booking-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  background: rgba(var(--vanilla-silk-rgb), 0.08);
+  color: var(--vanilla-silk);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.booking-close:hover {
+  border-color: rgba(var(--vanilla-silk-rgb), 0.4);
+  background: rgba(var(--vanilla-silk-rgb), 0.18);
+}
+
+.booking-head {
+  margin-bottom: 1.75rem;
+  padding-right: 2.5rem;
+}
+
+.booking-title {
+  margin: 0.35rem 0 0.75rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.booking-title em {
+  color: var(--warm-greige);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.booking-subtext {
+  color: var(--alpine-oat);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.booking-form {
+  margin: 0;
+}
+
+.booking-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.booking-note {
+  margin: 0;
+  color: var(--vanilla-silk);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  text-align: center;
+}
+

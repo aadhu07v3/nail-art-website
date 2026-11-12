@@ -1,5 +1,6 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import CardFlip from './components/kokonutui/card-flip'
+import BurgundyGallery from './components/BurgundyGallery'
 import almondImg from '../images/shapes/almond.png'
 import coffinImg from '../images/shapes/coffin.png'
 import flareImg from '../images/shapes/flare.png'
@@ -20,10 +21,29 @@ import gelVideo from '../assets/media/gel.mp4'
 import gelPoster from '../assets/media/posters/gel-poster.webp'
 import pressOnVideo from '../assets/media/press-on.mp4'
 import pressOnPoster from '../assets/media/posters/press-on-poster.webp'
+import heroNails from '../images/bg-nails.png'
+import bookingBg from '../images/bg 1.jpg'
 
-type Page = 'home' | 'shapes' | 'nail-types' | 'faq'
+type SectionId =
+  | 'home'
+  | 'services'
+  | 'shapes'
+  | 'nail-types'
+  | 'testimonials'
+  | 'faq'
+  | 'book'
 
-type Navigate = (page: Page, anchor?: string) => void
+const SECTION_IDS: SectionId[] = [
+  'home',
+  'services',
+  'shapes',
+  'nail-types',
+  'testimonials',
+  'faq',
+  'book',
+]
+
+type Navigate = (section: SectionId) => void
 
 interface Shape {
   slug: string
@@ -238,9 +258,8 @@ const TESTIMONIALS = [
 
 type NavItem = {
   label: string
-  page?: Page
-  anchor?: string
-  href?: string
+  anchor: SectionId
+  cta?: boolean
 }
 
 const FAQS = [
@@ -277,16 +296,13 @@ const FAQS = [
 ]
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', page: 'home', anchor: 'home' },
-  { label: 'Services', page: 'home', anchor: 'services' },
-  { label: 'Shapes', page: 'shapes' },
-  { label: 'Nail Types', page: 'nail-types' },
-  { label: 'Reviews', page: 'home', anchor: 'testimonials' },
-  { label: 'FAQ', page: 'faq' },
-  {
-    label: 'Book Now',
-    href: 'mailto:hello@auraatelier.in?subject=Booking%20request%20%E2%80%94%20Aura%20Atelier',
-  },
+  { label: 'Home', anchor: 'home' },
+  { label: 'Services', anchor: 'services' },
+  { label: 'Shapes', anchor: 'shapes' },
+  { label: 'Nail Types', anchor: 'nail-types' },
+  { label: 'Reviews', anchor: 'testimonials' },
+  { label: 'FAQ', anchor: 'faq' },
+  { label: 'Book Now', anchor: 'book', cta: true },
 ]
 
 const CURRENT_YEAR = new Date().getFullYear()
@@ -309,10 +325,10 @@ function Logo({ onClick }: { onClick: () => void }) {
 }
 
 function SiteHeader({
-  page,
+  active,
   onNavigate,
 }: {
-  page: Page
+  active: SectionId
   onNavigate: Navigate
 }) {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -325,41 +341,32 @@ function SiteHeader({
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const go = (next: Page, anchor?: string) => {
+  const go = (section: SectionId) => {
     setMobileOpen(false)
-    onNavigate(next, anchor)
+    onNavigate(section)
   }
 
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
       <div className="header-inner">
-        <Logo onClick={() => go('home', 'home')} />
+        <Logo onClick={() => go('home')} />
 
         <nav className="main-nav" aria-label="Main navigation">
           <ul className="nav-list">
             {NAV_ITEMS.map((item) => {
-              const current = item.page
-                ? (item.page === 'home' &&
-                    page === 'home' &&
-                    item.anchor === 'home') ||
-                  (item.page !== 'home' && page === item.page)
-                : false
+              const current = item.anchor === active
               return (
                 <li key={item.label}>
-                  {item.href ? (
-                    <a className="nav-link nav-link--cta" href={item.href}>
-                      {item.label}
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      className={`nav-link${current ? ' is-current' : ''}`}
-                      aria-current={current ? 'page' : undefined}
-                      onClick={() => item.page && go(item.page, item.anchor)}
-                    >
-                      {item.label}
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    className={`nav-link${item.cta ? ' nav-link--cta' : ''}${
+                      current && !item.cta ? ' is-current' : ''
+                    }`}
+                    aria-current={current ? 'page' : undefined}
+                    onClick={() => go(item.anchor)}
+                  >
+                    {item.label}
+                  </button>
                 </li>
               )
             })}
@@ -390,23 +397,15 @@ function SiteHeader({
         <ul className="mobile-nav-list">
           {NAV_ITEMS.map((item) => (
             <li key={item.label}>
-              {item.href ? (
-                <a
-                  className="mobile-nav-link mobile-nav-link--cta"
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  className="mobile-nav-link"
-                  onClick={() => item.page && go(item.page, item.anchor)}
-                >
-                  {item.label}
-                </button>
-              )}
+              <button
+                type="button"
+                className={`mobile-nav-link${
+                  item.cta ? ' mobile-nav-link--cta' : ''
+                }`}
+                onClick={() => go(item.anchor)}
+              >
+                {item.label}
+              </button>
             </li>
           ))}
         </ul>
@@ -420,7 +419,7 @@ function SiteFooter({ onNavigate }: { onNavigate: Navigate }) {
     <footer className="site-footer">
       <div className="footer-inner container">
         <div className="footer-brand">
-          <Logo onClick={() => onNavigate('home', 'home')} />
+          <Logo onClick={() => onNavigate('home')} />
           <p className="footer-tagline">
             Luxury nail artistry for the discerning few.
           </p>
@@ -431,21 +430,13 @@ function SiteFooter({ onNavigate }: { onNavigate: Navigate }) {
           <ul>
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
-                {item.href ? (
-                  <a className="footer-link-button" href={item.href}>
-                    {item.label}
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    className="footer-link-button"
-                    onClick={() =>
-                      item.page && onNavigate(item.page, item.anchor)
-                    }
-                  >
-                    {item.label}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="footer-link-button"
+                  onClick={() => onNavigate(item.anchor)}
+                >
+                  {item.label}
+                </button>
               </li>
             ))}
           </ul>
@@ -503,28 +494,27 @@ function SiteFooter({ onNavigate }: { onNavigate: Navigate }) {
   )
 }
 
-function HomePage({ onNavigate }: { onNavigate: Navigate }) {
+function HomeHero({ onNavigate }: { onNavigate: Navigate }) {
   return (
-    <main id="main-content">
-      <section className="hero" id="home">
-        <div className="hero-inner">
+    <section className="hero" id="home">
+      <div className="hero-inner">
+        <div className="hero-copy">
           <p className="eyebrow fade-up">Luxury Nail Artistry</p>
           <h1 className="hero-headline fade-up delay-1">
-            Where Every Nail
-            <br />
-            Becomes a <em>Masterpiece</em>
+            <span className="hero-brand-aura">AURA</span>
+            <span className="hero-brand-atelier">ATELIER</span>
           </h1>
           <p className="hero-subtext fade-up delay-2">
-            Bespoke nail art crafted with precision, passion, and couture-level
-            care.
+            Bespoke nail artistry, sculpted shapes, and couture finishes.
             <br />
-            Your hands deserve nothing less.
+            Crafted with precision, passion, and care for hands that deserve
+            nothing less.
           </p>
           <div className="hero-actions fade-up delay-3">
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => onNavigate('home', 'services')}
+              onClick={() => onNavigate('services')}
             >
               Explore Services
             </button>
@@ -537,61 +527,72 @@ function HomePage({ onNavigate }: { onNavigate: Navigate }) {
             </button>
           </div>
         </div>
-        <div className="hero-gradient" aria-hidden="true"></div>
-      </section>
-
-      <section className="services section alt-bg" id="services">
-        <div className="container">
-          <div className="section-intro fade-up">
-            <p className="section-label">What We Offer</p>
-            <h2 className="section-heading">Our Signature Services</h2>
-            <p className="section-subtext">
-              Each service is designed around your vision and executed with
-              gallery-worthy precision.
-            </p>
-          </div>
-
-          <div className="services-grid">
-            {SERVICES.map((service, index) => (
-              <article
-                className={`service-card fade-up delay-${(index % 3) + 1}`}
-                key={service.title}
-              >
-                <div className="card-icon" aria-hidden="true">
-                  {service.icon}
-                </div>
-                <h3 className="card-title">{service.title}</h3>
-                <p className="card-text">{service.text}</p>
-              </article>
-            ))}
-          </div>
+        <div className="hero-visual fade-up delay-2">
+          <img src={heroNails} alt="Aura Atelier nail art" />
         </div>
-      </section>
+      </div>
+      <div className="hero-gradient" aria-hidden="true"></div>
+    </section>
+  )
+}
 
-      <section className="testimonials section alt-bg" id="testimonials">
-        <div className="container">
-          <div className="section-intro fade-up">
-            <p className="section-label">Client Love</p>
-            <h2 className="section-heading">What Our Clients Say</h2>
-          </div>
-
-          <div className="testimonials-grid">
-            {TESTIMONIALS.map((testimonial, index) => (
-              <blockquote
-                className={`testimonial-card fade-up delay-${index + 1}`}
-                key={testimonial.name}
-              >
-                <p className="testimonial-text">{testimonial.text}</p>
-                <footer className="testimonial-author">
-                  <span className="author-name">{testimonial.name}</span>
-                  <span className="author-detail">{testimonial.detail}</span>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
+function ServicesSection() {
+  return (
+    <section className="services section alt-bg" id="services">
+      <div className="container">
+        <div className="section-intro fade-up">
+          <p className="section-label">What We Offer</p>
+          <h2 className="section-heading">Our Signature Services</h2>
+          <p className="section-subtext">
+            Each service is designed around your vision and executed with
+            gallery-worthy precision.
+          </p>
         </div>
-      </section>
-    </main>
+
+        <div className="services-grid">
+          {SERVICES.map((service, index) => (
+            <article
+              className={`service-card fade-up delay-${(index % 3) + 1}`}
+              key={service.title}
+            >
+              <div className="card-icon" aria-hidden="true">
+                {service.icon}
+              </div>
+              <h3 className="card-title">{service.title}</h3>
+              <p className="card-text">{service.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function TestimonialsSection() {
+  return (
+    <section className="testimonials section alt-bg" id="testimonials">
+      <div className="container">
+        <div className="section-intro fade-up">
+          <p className="section-label">Client Love</p>
+          <h2 className="section-heading">What Our Clients Say</h2>
+        </div>
+
+        <div className="testimonials-grid">
+          {TESTIMONIALS.map((testimonial, index) => (
+            <blockquote
+              className={`testimonial-card fade-up delay-${index + 1}`}
+              key={testimonial.name}
+            >
+              <p className="testimonial-text">{testimonial.text}</p>
+              <footer className="testimonial-author">
+                <span className="author-name">{testimonial.name}</span>
+                <span className="author-detail">{testimonial.detail}</span>
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -636,15 +637,15 @@ function ShapeCard({ shape }: { shape: Shape }) {
   )
 }
 
-function ShapesPage({ onNavigate }: { onNavigate: Navigate }) {
+function ShapesSection() {
   const [filter, setFilter] = useState('all')
   const visibleShapes = SHAPES.filter(
     (shape) => filter === 'all' || shape.slug === filter,
   )
 
   return (
-    <main id="main-content">
-      <section className="shapes-hero">
+    <>
+      <section className="shapes-hero" id="shapes">
         <div className="shapes-hero-inner">
           <p className="eyebrow fade-up">The Shape Library</p>
           <h1 className="shapes-hero-headline fade-up delay-1">
@@ -735,43 +736,20 @@ function ShapesPage({ onNavigate }: { onNavigate: Navigate }) {
         })}
       </div>
 
-      <section className="shapes-cta">
-        <div className="container shapes-cta-inner">
-          <p className="section-label">Keep Exploring</p>
-          <h2 className="section-heading">Discover Nail Types</h2>
-          <p className="section-subtext">
-            From gel to acrylic, explore the application techniques that bring
-            every silhouette to life.
-          </p>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => onNavigate('nail-types')}
-          >
-            Explore Nail Types
-          </button>
-        </div>
-      </section>
-    </main>
+      <BurgundyGallery />
+    </>
   )
 }
 
-function NailTypesPage() {
+function NailTypesSection() {
   const [filter, setFilter] = useState('all')
   const visibleTypes = NAIL_TYPES.filter(
     (type) => filter === 'all' || type.slug === filter,
   )
 
   return (
-    <>
-      <div className="page-aura" aria-hidden="true">
-        <span className="aura-blob aura-blob--greige"></span>
-        <span className="aura-blob aura-blob--cherry"></span>
-        <span className="aura-blob aura-blob--oat"></span>
-      </div>
-
-      <main id="main-content">
-        <section className="nail-types-hero">
+    <section className="nail-types-block" id="nail-types">
+      <section className="nail-types-hero">
           <div className="nail-types-hero-inner">
             <p className="eyebrow fade-up">The Application Library</p>
             <h1 className="nail-types-hero-title fade-up delay-1">
@@ -878,16 +856,15 @@ function NailTypesPage() {
             )
           })}
         </div>
-      </main>
-    </>
+      </section>
   )
 }
 
-function FaqPage() {
+function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <main id="main-content">
+    <section className="faq-block" id="faq">
       <section className="faq-hero">
         <div className="faq-hero-inner">
           <p className="eyebrow fade-up">Good to Know</p>
@@ -950,42 +927,142 @@ function FaqPage() {
           </div>
         </div>
       </section>
-    </main>
+    </section>
   )
 }
 
-function pageTitle(page: Page) {
-  if (page === 'shapes') return 'Shapes | Aura Atelier'
-  if (page === 'nail-types') return 'Nail Types | Aura Atelier'
-  if (page === 'faq') return 'FAQ | Aura Atelier'
-  return 'Aura Atelier'
+function BookingSection() {
+  const [submittedName, setSubmittedName] = useState('')
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const name = String(data.get('name') ?? '').trim()
+    const phone = String(data.get('phone') ?? '').trim()
+    const email = String(data.get('email') ?? '').trim()
+    const message = String(data.get('message') ?? '').trim()
+
+    const subject = encodeURIComponent('Booking request — Aura Atelier')
+    const body = encodeURIComponent(
+      `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\n\n${message}`,
+    )
+    window.location.href = `mailto:hello@auraatelier.in?subject=${subject}&body=${body}`
+    setSubmittedName(name)
+  }
+
+  return (
+    <section
+      className="booking-section"
+      id="book"
+      style={{
+        backgroundImage: `linear-gradient(rgba(var(--bordeaux-noir-rgb), 0.82), rgba(var(--bordeaux-noir-rgb), 0.9)), url(${bookingBg})`,
+      }}
+    >
+      <div className="booking-inner">
+        <div className="booking-panel">
+          <header className="booking-head">
+            <p className="section-label">Book an Appointment</p>
+            <h2 className="booking-title" id="booking-title">
+              Reserve Your <em>Seat</em>
+            </h2>
+            <p className="booking-subtext">
+              Share a few details and we will confirm your appointment by email.
+            </p>
+          </header>
+
+          <form className="contact-form booking-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="booking-name">Name</label>
+                <input
+                  id="booking-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="booking-phone">Phone Number</label>
+                <input
+                  id="booking-phone"
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="Your phone number"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="booking-email">Email</label>
+              <input
+                id="booking-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="booking-message">Message</label>
+              <textarea
+                id="booking-message"
+                name="message"
+                rows={4}
+                placeholder="Preferred date, service, and any inspiration…"
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary booking-submit">
+              Book Now
+            </button>
+
+            {submittedName && (
+              <p className="booking-note is-visible" role="status">
+                Thank you, {submittedName}. Your email draft is ready — send it
+                and we will confirm your appointment.
+              </p>
+            )}
+          </form>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 function App() {
-  const [page, setPage] = useState<Page>('home')
+  const [activeSection, setActiveSection] = useState<SectionId>('home')
 
-  const navigate: Navigate = (next, anchor) => {
-    setPage(next)
-    if (anchor) {
-      window.setTimeout(() => {
-        document
-          .getElementById(anchor)
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 80)
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+  const navigate: Navigate = (section) => {
+    document
+      .getElementById(section)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   useEffect(() => {
     document.documentElement.classList.add('js')
+    document.title = 'Aura Atelier'
   }, [])
 
   useEffect(() => {
-    document.title = pageTitle(page)
-    document.body.classList.toggle('nail-types-page', page === 'nail-types')
-    return () => document.body.classList.remove('nail-types-page')
-  }, [page])
+    const onScroll = () => {
+      const probe = window.scrollY + 140
+      let current: SectionId = 'home'
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id)
+        if (el && el.offsetTop <= probe) current = id
+      }
+      setActiveSection(current)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     const items = document.querySelectorAll(
@@ -1014,18 +1091,23 @@ function App() {
     })
 
     return () => observer.disconnect()
-  }, [page])
+  }, [])
 
   return (
     <>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <SiteHeader page={page} onNavigate={navigate} />
-      {page === 'home' && <HomePage onNavigate={navigate} />}
-      {page === 'shapes' && <ShapesPage onNavigate={navigate} />}
-      {page === 'nail-types' && <NailTypesPage />}
-      {page === 'faq' && <FaqPage />}
+      <SiteHeader active={activeSection} onNavigate={navigate} />
+      <main id="main-content">
+        <HomeHero onNavigate={navigate} />
+        <ServicesSection />
+        <ShapesSection />
+        <NailTypesSection />
+        <TestimonialsSection />
+        <FaqSection />
+        <BookingSection />
+      </main>
       <SiteFooter onNavigate={navigate} />
     </>
   )
